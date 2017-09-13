@@ -1,5 +1,19 @@
 # get ranking: 1-30
-# mode: [day, week, month, day_male, day_female, week_original, week_rookie, day_manga]
+# mode: [day, week, month, male, female, rookie, manga]
+
+ day -> daily
+ week -> weekly
+ month -> monthly
+ rookie ->rookie
+ orignal -> original
+
+ #content
+illust ->illust
+ugoira -> ugoira
+manga -> manga
+
+
+
 
 # 用户详情 (无需登录)
 def user_detail(self, user_id):
