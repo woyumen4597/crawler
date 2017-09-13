@@ -8,6 +8,7 @@ import us.codecraft.webmagic.pipeline.Pipeline;
 import utils.PicUtils;
 
 public class PixivPipeLine implements Pipeline {
+	//下载的目录
 	private String basePath = "D:\\webmagic";
 
 	public void process(ResultItems resultItems, Task task) {
