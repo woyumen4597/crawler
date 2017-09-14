@@ -53,4 +53,8 @@ public class RankTest {
 		new Rank().rank("daily", "manga");
 	}
 
+	@Test
+	public void rank_r18() throws Exception{
+		new Rank().rank("daily_r18");
+	}
 }
