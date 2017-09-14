@@ -2,3 +2,4 @@
    增加Rank功能(mode和content类型) --todo:r18
 2017/09/14
  增加r18功能(增加Header实现)
+ 添加查询用户信息(通过id)
