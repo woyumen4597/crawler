@@ -14,19 +14,11 @@ import us.codecraft.webmagic.selector.Json;
 
 /**
  *
- * # mode: [day, week, month, male, female, rookie, orignal]
-	 day -> daily
-	 week -> weekly
-	 month -> monthly
-	 male -> male
-	 female -> female
-	 rookie ->rookie
-	 orignal -> original
-
- #content
-	illust ->illust
-	ugoira -> ugoira
-	manga -> manga
+ * # mode: [day, week, month, male, female, rookie, orignal] day -> daily week
+ * -> weekly month -> monthly male -> male female -> female rookie ->rookie
+ * orignal -> original
+ *
+ * #content illust ->illust ugoira -> ugoira manga -> manga
  *
  * @author jrc
  *
@@ -37,24 +29,31 @@ public class Rank implements PageProcessor {
 	private Site site = Site.me().setRetryTimes(3).setTimeOut(10000)
 			.setUserAgent("Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11");
 
+	public Rank() {
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
 	public String getMode() {
 		return mode;
 	}
 
-	public Rank setMode(String mode) {
+	public void setMode(String mode) {
 		this.mode = mode;
-		return this;
-	}
-
-	public Rank() {
 	}
 
 	public Rank(String mode) {
-		this.mode = mode;
+		this.setMode(mode);
 	}
 
 	public Rank(String mode, String content) {
-		this.mode = mode;
+		this.setMode(mode);
 		this.setContent(content);
 	}
 
@@ -89,10 +88,14 @@ public class Rank implements PageProcessor {
 	}
 
 	/**
-	 * @param mode  排名类型
-	 * @param basePath 存储的图片位置
-	 * @param number  下载图片数量
-	 * @param content 图片类型
+	 * @param mode
+	 *            排名类型
+	 * @param basePath
+	 *            存储的图片位置
+	 * @param number
+	 *            下载图片数量
+	 * @param content
+	 *            图片类型
 	 * @throws Exception
 	 */
 	public void rank(String mode, String basePath, int number, String content) throws Exception {
@@ -100,11 +103,4 @@ public class Rank implements PageProcessor {
 		Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(new PixivPipeLine(basePath, number)).run();
 	}
 
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
 }

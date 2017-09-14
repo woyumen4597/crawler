@@ -16,12 +16,12 @@ public class PixivPipeLine implements Pipeline {
 		return basePath;
 	}
 
-	public PixivPipeLine setBasePath(String basePath) {
+	public PixivPipeLine path(String basePath) {
 		this.basePath = basePath;
 		return this;
 	}
 
-	public PixivPipeLine setNumber(int number) {
+	public PixivPipeLine number(int number) {
 		this.number = number;
 		return this;
 	}

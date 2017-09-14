@@ -53,6 +53,4 @@ public class RankTest {
 		new Rank().rank("daily", "manga");
 	}
 
-
-
 }
