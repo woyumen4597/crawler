@@ -18,7 +18,7 @@ manga -> manga
 # 用户详情 (无需登录)
 def user_detail(self, user_id):
 
-# 用户作品列表 (无需登录)
+# 用户作品列表 (无需登录)  //需要token
 def user_illusts(self, user_id, type='illust'):
 # 用户收藏作品列表 (无需登录)
 def user_bookmarks_illust(self, user_id, restrict='public'):

@@ -7,7 +7,7 @@ import java.util.List;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
-import pipeline.PixivPipeLine;
+import pipeline.SimplePagePipeLine;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
@@ -38,7 +38,7 @@ public class DailyPixivRanking implements PageProcessor {
 	public static void main(String[] args) {
 		try {
 			Spider.create(new DailyPixivRanking()).addUrl("https://www.pixiv.net/ranking.php?mode=daily&format=json").thread(3)
-					.addPipeline(new PixivPipeLine()).run();
+					.addPipeline(new SimplePagePipeLine()).run();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

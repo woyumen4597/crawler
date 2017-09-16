@@ -1,12 +1,13 @@
 package auth;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
-import pipeline.PixivPipeLine;
+import pipeline.SimplePagePipeLine;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
@@ -34,14 +35,15 @@ public class Auth implements PageProcessor{
 		return site;
 	}
 
+
 	public void r18_rank(String mode,int number) throws Exception{
 		String url = "https://www.pixiv.net/ranking.php?mode="+mode+"_r18&format=json";
-		Spider.create(new Auth()).addUrl(url).thread(3).addPipeline(new PixivPipeLine(number)).run();
+		Spider.create(new Auth()).addUrl(url).thread(3).addPipeline(new SimplePagePipeLine(number)).run();
 	}
 
 	public void r18_rank(String mode) throws Exception{
 		String url = "https://www.pixiv.net/ranking.php?mode="+mode+"_r18&format=json";
-		Spider.create(new Auth()).addUrl(url).thread(3).addPipeline(new PixivPipeLine()).run();
+		Spider.create(new Auth()).addUrl(url).thread(3).addPipeline(new SimplePagePipeLine()).run();
 	}
 
 	/**
@@ -52,7 +54,7 @@ public class Auth implements PageProcessor{
 	 */
 	public void r18_rank(int number,String mode,String basePath) throws Exception{
 		String url = "https://www.pixiv.net/ranking.php?mode="+mode+"_r18&format=json";
-		Spider.create(new Auth()).addUrl(url).thread(3).addPipeline(new PixivPipeLine(basePath, number)).run();
+		Spider.create(new Auth()).addUrl(url).thread(3).addPipeline(new SimplePagePipeLine(basePath, number)).run();
 	}
 
 }

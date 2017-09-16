@@ -6,7 +6,7 @@ import java.util.List;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
-import pipeline.PixivPipeLine;
+import pipeline.SimplePagePipeLine;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
@@ -75,17 +75,17 @@ public class Rank implements PageProcessor {
 
 	public void rank(String mode) throws Exception {
 		String originUrl = "https://www.pixiv.net/ranking.php?mode=" + mode + "&format=json";
-		Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(new PixivPipeLine()).run();
+		Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(new SimplePagePipeLine()).run();
 	}
 
 	public void rank(String mode, String basePath, int number) throws Exception {
 		String originUrl = "https://www.pixiv.net/ranking.php?mode=" + mode + "&format=json";
-		Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(new PixivPipeLine(basePath, number)).run();
+		Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(new SimplePagePipeLine(basePath, number)).run();
 	}
 
 	public void rank(String mode, String content) throws Exception {
 		String originUrl = "https://www.pixiv.net/ranking.php?mode=" + mode + "&content=" + content + "&format=json";
-		Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(new PixivPipeLine()).run();
+		Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(new SimplePagePipeLine()).run();
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class Rank implements PageProcessor {
 	 */
 	public void rank(String mode, String basePath, int number, String content) throws Exception {
 		String originUrl = "https://www.pixiv.net/ranking.php?mode=" + mode + "&content=" + content + "&format=json";
-		Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(new PixivPipeLine(basePath, number)).run();
+		Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(new SimplePagePipeLine(basePath, number)).run();
 	}
 
 }
