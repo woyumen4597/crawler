@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 public class PicUtils {
 
 
-	public static void download(String basePath, String filename, String url) throws IOException {
+	public static boolean download(String basePath, String filename, String url) throws IOException {
 		Logger logger = LoggerFactory.getLogger(PicUtils.class);
 		CloseableHttpClient client = HttpClients.createDefault();
 		HttpGet get = new HttpGet(url);
@@ -34,8 +34,10 @@ public class PicUtils {
 			outputStream.flush();
 			outputStream.close();
 			inputStream.close();
+			return true;
 		}else{
 			logger.error(url+" download failed,error code: "+code);
+			return false;
 		}
 	}
 }

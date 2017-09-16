@@ -1,28 +1,51 @@
 package user;
 
+import java.util.List;
+
 import org.junit.Test;
 
 public class UserTest {
 	@Test
-	public void user_detail(){
+	public void user_detail() {
 		new User().detail("27517");
 	}
 
 	@Test
-	public void user_detail2(){
+	public void user_detail2() {
 		new User("27517").detail();
 	}
 
 	@Test
-	public void user_exception(){
+	public void user_exception() {
 		new User().detail();
 	}
 
 	@Test
-	public void user(){
+	public void user() {
 		User user = new User();
 		Detail detail = user.detail("27517");
 		System.out.println(detail);
+	}
+
+	@Test
+	public void illust_id() {
+		Detail detail = new Detail();
+		List<String> ids = detail.getIllustIds("4755415");
+		for (String id : ids) {
+			System.out.println(id);
+		}
+	}
+
+	@Test
+	public void user_illust() {
+		User user = new User("4755415");
+		user.illust("4755415", 5, "D:\\webmagic");
+	}
+
+	@Test
+	public void user_illust2() {
+		User user = new User("4755415");
+		user.illust(5, "D:\\webmagic");
 	}
 
 }

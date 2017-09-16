@@ -43,11 +43,12 @@ public class MultiPagePipeLine implements Pipeline {
 			String url = list.get(i);
 			String filename = url.substring(url.lastIndexOf("/"));
 			try {
-				PicUtils.download(basePath, filename, url);
-				number--;
-				setNumber(number);
-				if (number < 0) {
-					System.exit(0);
+				if(PicUtils.download(basePath, filename, url)){
+					number--;
+					setNumber(number);
+					if (number <= 0) {
+						System.exit(0);
+					}
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
