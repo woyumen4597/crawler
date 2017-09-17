@@ -1,0 +1,33 @@
+package pipeline;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import search.Search;
+import us.codecraft.webmagic.ResultItems;
+import us.codecraft.webmagic.Task;
+import us.codecraft.webmagic.pipeline.Pipeline;
+
+public class SearchPipeLine implements Pipeline{
+	protected Logger logger = LoggerFactory.getLogger(getClass());
+	private List<Search> searchs;
+
+	public void process(ResultItems resultItems, Task task) {
+		List<Search> results = resultItems.get("results");
+		if(results!=null){
+			logger.info("Search Succeed!Saved into List<Search>!");
+		}
+		setSearchs(results);
+	}
+
+	public List<Search> getSearchs() {
+		return searchs;
+	}
+
+	public void setSearchs(List<Search> searchs) {
+		this.searchs = searchs;
+	}
+
+}
