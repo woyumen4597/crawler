@@ -1,4 +1,4 @@
-Crawer [![Build Status](https:/github.com/woyumen4597/crawer)](https:/github.com/woyumen4597/crawer)
+Crawer [![Build Status](http://123.206.130.92:8080)](http://123.206.130.92:8080)
 ======
 _Pixiv API for Java (without Auth supported)_
 
