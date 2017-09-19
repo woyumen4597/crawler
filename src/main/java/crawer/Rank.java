@@ -17,7 +17,7 @@ import us.codecraft.webmagic.selector.Json;
  *
  * # mode: [day, week, month, male, female, rookie, orignal] day -> daily week
  * -> weekly month -> monthly male -> male female -> female rookie ->rookie
- * orignal -> original
+ * original -> original
  *
  * #content illust ->illust ugoira -> ugoira manga -> manga
  *
@@ -90,13 +90,13 @@ public class Rank implements PageProcessor {
 
 	/**
 	 * @param mode
-	 *            排名类型
+	 *            模式
 	 * @param basePath
-	 *            存储的图片位置
+	 *            下载的目录位置 
 	 * @param number
-	 *            下载图片数量
+	 *            下载的图片数量
 	 * @param content
-	 *            图片类型
+	 *            内容类型
 	 * @throws Exception
 	 */
 	public void rank(String mode, String basePath, int number, String content) throws Exception {
