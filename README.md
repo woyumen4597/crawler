@@ -9,7 +9,10 @@ _Pixiv API for Java (without Auth supported)_
 * [2017/09/14] 增加r18功能(增加Header实现)(Cookie) 添加查询用户信息(通过id)
 * [2017/09/13] 增加Rank功能(mode和content类型)(webmagic Needed)
 
-Use Maven for installing:
+_写在前面_
+由于P站最近疑被墙(或者出现故障) 建议修改hosts文件(可以直接复制目录下的hosts文件到C:/windows/System32/drivers/etc/hosts 覆盖即可)
+
+_Use Maven for installing:_
 
 
 Requirements: [webmagic](https://webmagic.io)
