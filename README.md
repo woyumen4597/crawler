@@ -21,44 +21,49 @@ Requirements: [webmagic](https://webmagic.io)
 
 ### Docs:
  
- ~~~
-  //获得每日排行榜的图片并下载
-  * # mode: [day, week, month, male, female, rookie, orignal] 
-  * day -> daily 
-  * week-> weekly 
-  * month -> monthly 
-  * male -> male 
-  * female -> female 
-  * rookie ->rookie
-  * original -> original
+```
+//获得每日排行榜的图片并下载
+   mode: [day, week, month, male, female, rookie, orignal] 
+   day -> daily 
+   week-> weekly 
+   month -> monthly 
+   male -> male 
+   female -> female 
+   rookie ->rookie
+   original -> original
   
-  * content {illust ->illust ugoira -> ugoira manga -> manga}
-  public void rank(String mode, String basePath, int number, String content)
-  ~~~
- 
- ~~~	
+   content {illust ->illust ugoira -> ugoira manga -> manga}
+   public void rank(String mode, String basePath, int number, String content);
+```
+
+  
+  
+
+```java
   //下载画师的作品到指定目录
   @param user_id 画师id
   @param number 下载图片数量
   @param basePath 下载目录(需先行建立)
-  public void illust(String user_id, int number, String basePath)
- ~~~
+  public void illust(String user_id, int number, String basePath);
+```
 
- ~~~
+
+```java
   //获得搜索关键词的信息
   @param word 搜索关键字
   @param mode {safe：普通,r18:r18}
   @param sort {date_d:按最新排序,date:按最旧排序}
    public List<Search> search(String word,String mode, String order);
-  ~~~
- ~~~
+```
+
+```java
   //获得pixivsion特辑id的图片
   public void pixivision(String id,String basePath,int number);
-~~~
+```
 
 ### Examples:
  
-在[test](https://github.com/woyumen4597/crawer)包里
+在[test](https://github.com/woyumen4597/crawer/tree/master/src/test/java/)包里
 
 ## License
 
