@@ -15,8 +15,13 @@ import us.codecraft.webmagic.selector.Json;
 
 /**
  *
- * # mode: [day, week, month, male, female, rookie, orignal] day -> daily week
- * -> weekly month -> monthly male -> male female -> female rookie ->rookie
+ * # mode: [day, week, month, male, female, rookie, orignal] 
+ * day -> daily 
+ * week-> weekly 
+ * month -> monthly 
+ * male -> male 
+ * female -> female 
+ * rookie ->rookie
  * original -> original
  *
  * #content illust ->illust ugoira -> ugoira manga -> manga
@@ -87,7 +92,13 @@ public class Rank implements PageProcessor {
 
 	/**
 	 * @param mode
-	 *            模式
+	 * day -> daily 
+	 * week-> weekly 
+	 * month -> monthly 
+	 * male -> male 
+	 * female -> female 
+	 * rookie ->rookie
+	 * original -> original
 	 * @param basePath
 	 *            下载的目录位置 
 	 * @param number

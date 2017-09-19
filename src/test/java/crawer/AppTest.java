@@ -5,12 +5,14 @@ import java.util.List;
 import org.junit.Test;
 
 import search.Search;
+import user.Detail;
 
 public class AppTest {
 	@Test
 	public void test1() throws Exception {
 		App app = new App();
-		app.user().detail();
+		Detail detail = app.user("27517").detail();
+		System.out.println(detail);
 	}
 
 	@Test
