@@ -74,18 +74,15 @@ public class Rank implements PageProcessor {
 	}
 
 	public void rank(String mode) throws Exception {
-		String originUrl = "https://www.pixiv.net/ranking.php?mode=" + mode + "&format=json";
-		Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(new SimplePagePipeLine()).run();
+		rank(mode, SimplePagePipeLine.DEFAULT_DOWNLOAD_PATH, SimplePagePipeLine.DEFAULT_DOWNLOAD_NUMBER);
 	}
 
 	public void rank(String mode, String basePath, int number) throws Exception {
-		String originUrl = "https://www.pixiv.net/ranking.php?mode=" + mode + "&format=json";
-		Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(new SimplePagePipeLine(basePath, number)).run();
+		rank(mode, basePath, number, "illust");;
 	}
 
 	public void rank(String mode, String content) throws Exception {
-		String originUrl = "https://www.pixiv.net/ranking.php?mode=" + mode + "&content=" + content + "&format=json";
-		Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(new SimplePagePipeLine()).run();
+		rank(mode, SimplePagePipeLine.DEFAULT_DOWNLOAD_PATH, SimplePagePipeLine.DEFAULT_DOWNLOAD_NUMBER, content);
 	}
 
 	/**

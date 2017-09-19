@@ -9,9 +9,11 @@ import us.codecraft.webmagic.pipeline.Pipeline;
 import utils.PicUtils;
 
 public class SimplePagePipeLine implements Pipeline {
+	public static String DEFAULT_DOWNLOAD_PATH = "D:\\webmagic"; 
+	public static int DEFAULT_DOWNLOAD_NUMBER = 5;
 	// 下载的目录
-	private String basePath = "D:\\webmagic"; // default
-	private int number = 5; // default
+	private String basePath = DEFAULT_DOWNLOAD_PATH; // default
+	private int number = DEFAULT_DOWNLOAD_NUMBER; // default
 
 	public String getBasePath() {
 		return basePath;
@@ -50,11 +52,14 @@ public class SimplePagePipeLine implements Pipeline {
 	public void process(ResultItems resultItems, Task task) {
 		List<String> list = resultItems.get("urls");
 		int num = this.number<list.size()?this.number:list.size();
-		for (int i = 0; i < num; i++) {
+		int i = 0;
+		while(i<num) {
 			String url = list.get(i);
 			String filename = url.substring(url.lastIndexOf("/"));
 			try {
-				PicUtils.download(basePath, filename, url);
+				if(PicUtils.download(basePath, filename, url)) {
+					i++;
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 				continue;

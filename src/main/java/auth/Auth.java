@@ -28,7 +28,6 @@ public class Auth implements PageProcessor{
 			urls.add(url);
 		}
 		page.putField("urls", urls);
-
 	}
 
 	public Site getSite() {
