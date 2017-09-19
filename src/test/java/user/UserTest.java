@@ -11,12 +11,12 @@ public class UserTest {
 	}
 
 	@Test
-	public void user_detail2() {
+	public void user_detail2() throws RuntimeException {
 		new User("27517").detail();
 	}
 
 	@Test
-	public void user_exception() {
+	public void user_exception() throws RuntimeException {
 		new User().detail();
 	}
 
@@ -38,7 +38,7 @@ public class UserTest {
 
 	@Test
 	public void user_illust() {
-		User user = new User("4755415");
+		User user = new User();
 		user.illust("4755415", 5, "D:\\webmagic");
 	}
 

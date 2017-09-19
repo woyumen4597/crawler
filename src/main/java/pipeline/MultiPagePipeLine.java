@@ -37,18 +37,18 @@ public class MultiPagePipeLine implements Pipeline {
 	}
 
 
-	public void process(ResultItems resultItems, Task task) {
+	public synchronized void  process(ResultItems resultItems, Task task) {
 		List<String> list = resultItems.get("urls");
 		for (int i = 0; i < list.size(); i++) {
 			String url = list.get(i);
 			String filename = url.substring(url.lastIndexOf("/"));
 			try {
+				if (getNumber()< 0) {
+					System.exit(0);
+				}
 				if(PicUtils.download(basePath, filename, url)){
 					number--;
 					setNumber(number);
-					if (number <= 0) {
-						System.exit(0);
-					}
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

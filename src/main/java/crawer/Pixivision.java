@@ -32,6 +32,9 @@ public class Pixivision implements PageProcessor{
 		return site;
 	}
 
+	/**
+	 * @param id  pixivsion特辑id
+	 */
 	public void pixivision(String id) {
 		pixivision(id, SimplePagePipeLine.DEFAULT_DOWNLOAD_PATH, SimplePagePipeLine.DEFAULT_DOWNLOAD_NUMBER);
 	}

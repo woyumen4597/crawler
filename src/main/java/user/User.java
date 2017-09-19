@@ -1,5 +1,7 @@
 package user;
 
+import java.util.List;
+
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
@@ -76,17 +78,22 @@ public class User implements PageProcessor {
 
 	}
 
-	public Detail detail() {
+	
+	/**
+	 * @return 若用户已经设置id,则返回用户信息
+	 * @throws RuntimeException 用户id未设置
+	 */
+	public Detail detail() throws RuntimeException{
 		if (getId() == null || getId().equals("")) {
 			throw new RuntimeException("Please input user_id");
 		}
-		String url = "https://app-api.pixiv.net/v1/user/detail?user_id=" + getId();
-		Detail detail = new Detail();
-		UserPipeLine pipeLine = new UserPipeLine(detail);
-		Spider.create(new User()).addUrl(url).thread(3).addPipeline(pipeLine).run();
-		return pipeLine.getDetail();
+		return detail(getId());
 	}
 
+	/**
+	 * @param id 用户id
+	 * @return 用户信息
+	 */
 	public Detail detail(String id) {
 		String url = "https://app-api.pixiv.net/v1/user/detail?user_id=" + id;
 		Detail detail = new Detail();
@@ -98,16 +105,29 @@ public class User implements PageProcessor {
 	/**
 	 * 根据用户id查询作品列表并下载指定数量到指定目录
 	 *
-	 * @param user_id
-	 * @param number
-	 * @param basePath
+	 * @param user_id 用户id
+	 * @param number 下载数量
+	 * @param basePath 下载目录 
 	 */
 	public void illust(String user_id, int number, String basePath) {
-		String illust_id = getDetail().getIllustIds(user_id).get(0);
-		getIllust().illust(illust_id, number, basePath);
+		List<String> illustIds = getDetail().getIllustIds(user_id);
+		if(illustIds.size()==0) {
+			throw new RuntimeException("Failed to inquery illusts!");
+		}else {
+			String illust_id = illustIds.get(0);
+			getIllust().illust(illust_id, number, basePath);
+		}
+		
 	}
 
-	public void illust(int number, String basePath) {
+	
+	/**
+	 * 若user已经设置id，则下载成功，否则抛出RuntimeException:
+	 * @param number 下载数量
+	 * @param basePath 下载目录 
+	 * @throws RuntimeException 
+	 */
+	public void illust(int number, String basePath) throws RuntimeException{
 		if (getId() == null | getId().equals("")) {
 			throw new RuntimeException("please input user_id!");
 		} else {
