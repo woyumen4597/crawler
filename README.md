@@ -13,6 +13,7 @@ _写在前面_
 
 由于P站最近疑被墙(或者出现故障) 建议修改hosts文件(可以直接复制目录下的hosts文件到C:/windows/System32/drivers/etc/hosts 覆盖即可)
 
+
 _Use Maven for installing:_
 
 
@@ -54,6 +55,10 @@ Requirements: [webmagic](https://webmagic.io)
   //获得pixivsion特辑id的图片
   public void pixivision(String id,String basePath,int number);
 ~~~
+
+### Examples:
+ 
+ 	在[test](https://github.com/woyumen4597/crawer/tree/master/src/test/java)包里
 
 ## License
 
