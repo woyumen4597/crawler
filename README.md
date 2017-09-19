@@ -32,8 +32,11 @@ Requirements: [webmagic](https://webmagic.io)
   ~~~
  
  ~~~	
-  //获得画师id为475415的作品下载5张到D:\\webmagic(文件夹需先行建立)
-  public void illust(String user_id, int number, String basePath)
+  //下载画师的作品到指定目录
+  @param user_id 画师id
+  @param number 下载图片数量
+  @param basePath 下载目录(需先行建立)
+  public void illust(String user_id, int number, String basePath)
  ~~~
 
  ~~~
