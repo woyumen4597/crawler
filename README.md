@@ -21,8 +21,8 @@ Requirements: [webmagic](https://webmagic.io)
 
 ### Docs:
 To See [doc](/doc) 
-```
-//获得每日排行榜的图片并下载
+```java
+   //获得每日排行榜的图片并下载
    mode: [day, week, month, male, female, rookie, orignal] 
    day -> daily 
    week-> weekly 
