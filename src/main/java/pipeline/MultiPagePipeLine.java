@@ -8,6 +8,11 @@ import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
 import utils.PicUtils;
 
+/**
+ * 下载多个页面图片的PipeLine
+ * @author jrc
+ *
+ */
 public class MultiPagePipeLine implements Pipeline {
 
 	private int number = 5; // 多个页面加起来的url数量(默认为5)

@@ -13,8 +13,9 @@ import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Json;
 
 /**
- * @author Administrator
- *
+ * 获取画师信息的一些方法
+ * @author jrc
+ * 
  */
 public class User implements PageProcessor {
 	private String id;

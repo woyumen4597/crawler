@@ -45,7 +45,6 @@ Requirements: [webmagic](https://webmagic.io)
   @param number 下载图片数量
   @param basePath 下载目录(需先行建立)
   public void illust(String user_id, int number, String basePath);
-```
 
 
 ```java

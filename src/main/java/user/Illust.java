@@ -12,6 +12,11 @@ import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Html;
 
+/**
+ * 下载指定画师的作品
+ * @author jrc
+ *
+ */
 public class Illust implements PageProcessor {
 
 	private Site site = Site.me().addHeader("Host", "www.pixiv.net")

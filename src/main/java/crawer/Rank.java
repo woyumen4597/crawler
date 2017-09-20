@@ -14,7 +14,7 @@ import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Json;
 
 /**
- *
+ * 排行榜
  * # mode: [day, week, month, male, female, rookie, orignal] 
  * day -> daily 
  * week-> weekly 
@@ -27,7 +27,7 @@ import us.codecraft.webmagic.selector.Json;
  * #content illust ->illust ugoira -> ugoira manga -> manga
  *
  * @author jrc
- *
+ * 
  */
 public class Rank implements PageProcessor {
 	private String mode;

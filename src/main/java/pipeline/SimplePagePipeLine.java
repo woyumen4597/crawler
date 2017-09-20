@@ -8,6 +8,11 @@ import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
 import utils.PicUtils;
 
+/**
+ * 处理单一界面图片下载的PipeLine
+ * @author jrc
+ *
+ */
 public class SimplePagePipeLine implements Pipeline {
 	public static String DEFAULT_DOWNLOAD_PATH = "D:\\webmagic"; 
 	public static int DEFAULT_DOWNLOAD_NUMBER = 5;

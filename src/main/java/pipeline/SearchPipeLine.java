@@ -10,6 +10,11 @@ import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
 
+/**
+ * 处理搜索结果的PipeLine
+ * @author jrc
+ *
+ */
 public class SearchPipeLine implements Pipeline{
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	private List<Search> searchs;

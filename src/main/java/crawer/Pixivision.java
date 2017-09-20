@@ -12,6 +12,11 @@ import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Html;
 
+/**
+ * 查看pixivision
+ * @author jrc
+ *
+ */
 public class Pixivision implements PageProcessor{
 	private Site site = Site.me().setRetryTimes(3).setTimeOut(10000)
 			.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36");	

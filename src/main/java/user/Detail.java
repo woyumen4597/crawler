@@ -11,6 +11,11 @@ import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Html;
 
+/**
+ * User的基本信息Detail
+ * @author jrc
+ * @see user.User
+ */
 public class Detail implements PageProcessor {
 	private String name;
 	private String id;

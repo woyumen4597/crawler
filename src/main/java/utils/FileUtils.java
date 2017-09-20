@@ -6,6 +6,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/**
+ * 测试类File
+ * @author jrc
+ *
+ */
 public class FileUtils {
 	public static void readToBuffer(StringBuffer buffer,String filePath) throws IOException{
 		InputStream in = new FileInputStream(filePath);

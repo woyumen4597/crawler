@@ -14,6 +14,11 @@ import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Json;
 
+/**
+ * 最初的测试类 
+ * @author jrc
+ *
+ */
 public class DailyPixivRanking implements PageProcessor {
 	private static int NUMBER = 5;
 	private Site site = Site.me().setRetryTimes(3).setTimeOut(10000)
