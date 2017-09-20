@@ -14,17 +14,20 @@ import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Json;
 
 /**
- * 排行榜
- * # mode: [day, week, month, male, female, rookie, orignal] 
- * day -> daily 
- * week-> weekly 
- * month -> monthly 
- * male -> male 
- * female -> female 
- * rookie ->rookie
- * original -> original
- *
- * #content illust ->illust ugoira -> ugoira manga -> manga
+ * 排行榜 <br>
+ * # mode: [day, week, month, male, female, rookie, orignal] <br>
+ * day -> daily  <br>
+ * week-> weekly <br>
+ * month -> monthly <br>
+ * male -> male  <br>
+ * female -> female  <br>
+ * rookie ->rookie <br>
+ * original -> original <br>
+ *<br>
+ * #content  <br>
+ * illust ->illust <br> 
+ * ugoira -> ugoira <br>
+ * manga -> manga<br>
  *
  * @author jrc
  * 
