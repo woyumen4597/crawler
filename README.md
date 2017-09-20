@@ -20,7 +20,7 @@ _Use Maven for installing:_
 Requirements: [webmagic](https://webmagic.io)
 
 ### Docs:
- 
+To See [doc](/doc) 
 ```
 //获得每日排行榜的图片并下载
    mode: [day, week, month, male, female, rookie, orignal] 
@@ -45,7 +45,7 @@ Requirements: [webmagic](https://webmagic.io)
   @param number 下载图片数量
   @param basePath 下载目录(需先行建立)
   public void illust(String user_id, int number, String basePath);
-
+```
 
 ```java
   //获得搜索关键词的信息
