@@ -1,4 +1,4 @@
-Crawer [![Build Status](https://travis-ci.org/upbit/pixivpy.svg)](http://123.206.130.92:8080)
+Crawer [![Build Status](https://travis-ci.org/upbit/pixivpy.svg)](http://www.woyumen4597.me)
 ======
 _Pixiv API for Java (without Auth supported)_
 
