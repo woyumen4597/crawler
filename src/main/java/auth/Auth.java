@@ -7,6 +7,7 @@ import java.util.List;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
+import pipeline.RankUrlPipeLine;
 import pipeline.SimplePagePipeLine;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -18,6 +19,10 @@ import us.codecraft.webmagic.selector.Json;
  * 包括r18等需要认证的内容
  * @author jrc
  *
+ */
+/**
+ * @author jrc
+ * 2017年10月5日下午2:22:45
  */
 public class Auth implements PageProcessor{
 
@@ -66,6 +71,20 @@ public class Auth implements PageProcessor{
 	public void r18_rank(int number,String mode,String basePath) throws Exception{
 		String url = "https://www.pixiv.net/ranking.php?mode="+mode+"_r18&format=json";
 		Spider.create(new Auth()).addUrl(url).thread(3).addPipeline(new SimplePagePipeLine(basePath, number)).run();
+	}
+
+	/**
+	 * 
+	 * @param mode
+	 * @return 图片url列表 
+	 * @throws Exception
+	 */
+	public List<String> r18_rank_result(String mode) throws Exception{
+		String url = "https://www.pixiv.net/ranking.php?mode="+mode+"_r18&format=json";
+		List<String> urls = new ArrayList<>();
+		RankUrlPipeLine pipeLine = new RankUrlPipeLine(urls);
+		Spider.create(new Auth()).addUrl(url).thread(3).addPipeline(pipeLine).run();
+		return pipeLine.getUrls();
 	}
 
 }

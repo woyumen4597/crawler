@@ -6,6 +6,7 @@ import java.util.List;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
+import pipeline.RankUrlPipeLine;
 import pipeline.SimplePagePipeLine;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -113,6 +114,19 @@ public class Rank implements PageProcessor {
 	public void rank(String mode, String basePath, int number, String content) throws Exception {
 		String originUrl = "https://www.pixiv.net/ranking.php?mode=" + mode + "&content=" + content + "&format=json";
 		Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(new SimplePagePipeLine(basePath, number)).run();
+	}
+	
+	/**
+	 * @param mode
+	 * @return 获得url的列表
+	 * @throws Exception
+	 */
+	public List<String> rankResult(String mode) throws Exception{
+		String originUrl = "https://www.pixiv.net/ranking.php?mode=" + mode + "&format=json";
+		List<String> urls = new ArrayList<String>();
+		RankUrlPipeLine pipeLine = new RankUrlPipeLine(urls);
+		Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(pipeLine).run();
+		return pipeLine.getUrls();
 	}
 
 }

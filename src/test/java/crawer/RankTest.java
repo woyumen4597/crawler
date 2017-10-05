@@ -1,5 +1,7 @@
 package crawer;
 
+import java.util.List;
+
 import org.junit.Test;
 
 public class RankTest {
@@ -57,4 +59,13 @@ public class RankTest {
 	public void rank_r18() throws Exception{
 		new Rank().rank("daily_r18");
 	}
+	
+	@Test
+	public void rank_urls() throws Exception{	
+		List<String> list = new Rank().rankResult("daily");
+		for (String string : list) {
+			System.out.println(string);
+		}
+	}
+	
 }
