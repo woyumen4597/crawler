@@ -27,6 +27,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import search.Search;
+import user.User;
+import utils.DuplicateRemover;
 
 public class UI extends Application {
 	private List<String> urls = new ArrayList<String>();
@@ -86,13 +88,29 @@ public class UI extends Application {
 		showResult(r18);
 		rankItem.getChildren().addAll(daily, weekly, monthly, male, female, r18);
 		TreeView rankTree = new TreeView(rankItem);
-
+		// User模块
 		TreeItem userItem = new TreeItem("User");
 		HBox box = new HBox();
 		TextField userIdTextField = new TextField();
 		userIdTextField.setMaxWidth(100);
 		Label label = new Label("UserId");
 		Button idButton = new Button("Go");
+		idButton.setOnAction((ActionEvent e) -> {
+			Thread thread = new Thread(new Runnable() {
+				public void run() {
+					Platform.runLater(() -> {
+						String id = userIdTextField.getText();
+						User user = new User(id);
+						urls = user.illust(5);
+						urls = DuplicateRemover.removeDuplicate(urls);
+						createPagination();
+					});
+				}
+			});
+			thread.start();
+
+		});
+
 		box.setSpacing(5);
 		box.getChildren().addAll(label, userIdTextField, idButton);
 		TreeItem user_id = new TreeItem(box);
@@ -112,7 +130,11 @@ public class UI extends Application {
 		primaryStage.show();
 	}
 
-	// 中间显示
+	/**
+	 * 动态加载rank后的图片
+	 * 
+	 * @param mode
+	 */
 	@SuppressWarnings("rawtypes")
 	private void showResult(TreeItem mode) {
 		Hyperlink link = (Hyperlink) mode.getValue();
@@ -153,20 +175,30 @@ public class UI extends Application {
 		this.urls = urls;
 	}
 
+	/**
+	 * @param pageIndex
+	 * @return 创建每一个分页
+	 */
 	public VBox createPage(Integer pageIndex) {
 		VBox box = new VBox(5);
 		int page = pageIndex * itemsPerpage();
 		for (int i = page; i < page + itemsPerpage(); i++) {
 			Image image = new Image(urls.get(i));
-			ImageView imageView = new ImageView(image);
-			imageView.setFitHeight(150);
-			imageView.setFitWidth(150);
-			box.getChildren().add(imageView);
-			box.setAlignment(Pos.CENTER);
+			if(!image.isError()) {
+				ImageView imageView = new ImageView(image);
+				imageView.setFitHeight(150);
+				imageView.setFitWidth(150);
+				box.getChildren().add(imageView);
+				box.setAlignment(Pos.CENTER);
+			}
+			
 		}
 		return box;
 	}
 
+	/**
+	 * 创建分页
+	 */
 	public void createPagination() {
 		pagination = new Pagination(urls.size() / itemsPerpage(), 0);
 		pagination.setPageFactory((Integer pageIndex) -> createPage(pageIndex));

@@ -136,5 +136,24 @@ public class User implements PageProcessor {
 			getIllust().illust(illust_id, number, basePath);
 		}
 	}
+	
+	
+	/**
+	 * 若user已经设置id，则返回列表，否则抛出RuntimeException
+	 * @param number
+	 * @return 图片url列表 
+	 * @throws RuntimeException
+	 */
+	public List<String> illust(int number) throws RuntimeException{
+		if (getId() == null | getId().equals("")) {
+			throw new RuntimeException("please input user_id!");
+		} else {
+			String illust_id = getDetail().getIllustIds(getId()).get(0);
+			List<String> list = getIllust().illust(illust_id, number);
+			return list;
+		}
+	}
+	
+	
 
 }

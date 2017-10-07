@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import pipeline.IllustPipeLine;
 import pipeline.MultiPagePipeLine;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -61,6 +62,18 @@ public class Illust implements PageProcessor {
 	public void illust(String illust_id,int number,String basePath) {
 		String url = "https://www.pixiv.net/member_illust.php?mode=medium&illust_id=" + illust_id;
 		Spider.create(new Illust()).addUrl(url).addPipeline(new MultiPagePipeLine(number, basePath)).thread(3).run();
+	}
+	
+	/**
+	 * @param illust_id
+	 * @param number
+	 * @return 图片url的列表
+	 */
+	public List<String> illust(String illust_id,int number) {
+		String url = "https://www.pixiv.net/member_illust.php?mode=medium&illust_id=" + illust_id;
+		IllustPipeLine pipeLine = new IllustPipeLine(number);
+		Spider.create(new Illust()).addUrl(url).addPipeline(pipeLine).thread(3).run();
+		return pipeLine.getUrls();
 	}
 
 }
