@@ -24,4 +24,16 @@ public class SearchTest {
 			System.out.println(search2);
 		}
 	}
+	
+	@Test
+	public void search4() {
+		Search search = new Search();
+		List<String> images = search.searchImages("水着","safe", "date_d");
+		for (String string : images) {
+			System.out.println(string);
+		}
+		
+	}
+	
+	
 }

@@ -18,10 +18,6 @@ import us.codecraft.webmagic.selector.Json;
 /**
  * 包括r18等需要认证的内容
  * @author jrc
- *
- */
-/**
- * @author jrc
  * 2017年10月5日下午2:22:45
  */
 public class Auth implements PageProcessor{

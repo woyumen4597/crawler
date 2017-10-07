@@ -7,6 +7,7 @@ import auth.Auth;
 import crawer.Rank;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -25,6 +26,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import search.Search;
 
 public class UI extends Application {
 	private List<String> urls = new ArrayList<String>();
@@ -44,11 +46,25 @@ public class UI extends Application {
 		BorderPane pane = new BorderPane();
 		anchor = new AnchorPane();
 		// 左边搜索框
-		TextField search = new TextField();
+		TextField searchTextField = new TextField();
 		Button searchButton = new Button("Search");
+		searchButton.setOnAction((ActionEvent e) -> {
+			Thread thread = new Thread(new Runnable() {
+				public void run() {
+					Platform.runLater(() -> {
+						String keyword = searchTextField.getText();
+						Search search = new Search();
+						urls = search.searchImages(keyword, "safe", "date_d");
+						createPagination();
+					});
+				}
+			});
+			thread.start();
+
+		});
 		HBox hBox = new HBox();
 		hBox.setSpacing(5);
-		hBox.getChildren().addAll(search, searchButton);
+		hBox.getChildren().addAll(searchTextField, searchButton);
 
 		// 左边工具栏
 		VBox vBox = new VBox();
@@ -84,8 +100,6 @@ public class UI extends Application {
 		TreeView userTree = new TreeView(userItem);
 		vBox.getChildren().addAll(hBox, rankTree, userTree);
 
-		
-
 		// stage
 		pane.setLeft(vBox);
 		pane.setCenter(anchor);
@@ -97,6 +111,7 @@ public class UI extends Application {
 		primaryStage.setMaximized(true);
 		primaryStage.show();
 	}
+
 	// 中间显示
 	@SuppressWarnings("rawtypes")
 	private void showResult(TreeItem mode) {
@@ -113,13 +128,7 @@ public class UI extends Application {
 								Rank rank = new Rank();
 								urls = rank.rankResult(link.getText().toLowerCase());
 							}
-							pagination = new Pagination(urls.size() / itemsPerpage(), 0);
-							pagination.setPageFactory((Integer pageIndex) -> createPage(pageIndex, urls));
-							AnchorPane.setTopAnchor(pagination, 10.0);
-							AnchorPane.setRightAnchor(pagination, 10.0);
-							AnchorPane.setBottomAnchor(pagination, 10.0);
-							AnchorPane.setLeftAnchor(pagination, 10.0);
-							anchor.getChildren().addAll(pagination);
+							createPagination();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -127,19 +136,6 @@ public class UI extends Application {
 
 				}
 
-				private VBox createPage(Integer pageIndex, List<String> list) {
-					VBox box = new VBox(5);
-					int page = pageIndex * itemsPerpage();
-					for (int i = page; i < page + itemsPerpage(); i++) {
-						Image image = new Image(list.get(i));
-						ImageView imageView = new ImageView(image);
-						imageView.setFitHeight(150);
-						imageView.setFitWidth(150);
-						box.getChildren().add(imageView);
-						box.setAlignment(Pos.CENTER);
-					}
-					return box;
-				}
 			});
 			thread.start();
 		});
@@ -155,5 +151,29 @@ public class UI extends Application {
 
 	public void setUrls(List<String> urls) {
 		this.urls = urls;
+	}
+
+	public VBox createPage(Integer pageIndex) {
+		VBox box = new VBox(5);
+		int page = pageIndex * itemsPerpage();
+		for (int i = page; i < page + itemsPerpage(); i++) {
+			Image image = new Image(urls.get(i));
+			ImageView imageView = new ImageView(image);
+			imageView.setFitHeight(150);
+			imageView.setFitWidth(150);
+			box.getChildren().add(imageView);
+			box.setAlignment(Pos.CENTER);
+		}
+		return box;
+	}
+
+	public void createPagination() {
+		pagination = new Pagination(urls.size() / itemsPerpage(), 0);
+		pagination.setPageFactory((Integer pageIndex) -> createPage(pageIndex));
+		AnchorPane.setTopAnchor(pagination, 10.0);
+		AnchorPane.setRightAnchor(pagination, 10.0);
+		AnchorPane.setBottomAnchor(pagination, 10.0);
+		AnchorPane.setLeftAnchor(pagination, 10.0);
+		anchor.getChildren().addAll(pagination);
 	}
 }

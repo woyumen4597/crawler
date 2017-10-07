@@ -28,6 +28,8 @@ public class Search implements PageProcessor {
 	private String type;
 	private String tags;
 	private String user_id;
+	private List<String> images = new ArrayList<String>();
+	private List<Search> results = new ArrayList<Search>();
 
 	public String getImage() {
 		return image;
@@ -68,13 +70,12 @@ public class Search implements PageProcessor {
 	public void process(Page page) {
 		Html html = page.getHtml();
 		List<String> list = html.css("div._layout-thumbnail").all();
-		List<Search> results = new ArrayList<Search>();
-		List<String> urls = new ArrayList<String>();
 		for (String string : list) {
 			if (string.contains("illust")) {
 				Search search = new Search();
 				String url = StringUtils.substringBetween(string, "data-src=\"", "\"");
-				urls.add(url);
+				url = url.replace("150x150", "240x240");
+				images.add(url);
 				search.setImage(url);
 				search.setTags(StringUtils.substringBetween(string, "data-tags=\"", "\""));
 				search.setType(StringUtils.substringBetween(string, "data-type=\"", "\""));
@@ -83,7 +84,7 @@ public class Search implements PageProcessor {
 			}
 		}
 		page.putField("results", results);
-		page.putField("urls", urls);
+		page.putField("images", images);
 	}
 
 	@Override
@@ -108,8 +109,36 @@ public class Search implements PageProcessor {
 			e.printStackTrace();
 		}
 		SearchPipeLine pipeLine = new SearchPipeLine();
-		String url ="https://www.pixiv.net/search.php?s_mode=s_tag&word="+word+"&order="+order+"&mode="+mode;
-		Spider.create(new Search()).addUrl(url).addPipeline(pipeLine).thread(3).run();
+		String url ="https://www.pixiv.net/search.php?s_mode=s_tag&word="+word+"&order="+order+"&mode="+mode+"&p=";
+		List<String> list = new ArrayList<>();
+		for (int i = 1; i <= 5; i++) {
+			list.add(url+i);
+		}
+		String[] urls = list.toArray(new String[5]);
+		Spider.create(new Search()).addUrl(urls).addPipeline(pipeLine).thread(3).run();
 		return pipeLine.getSearchs();
+	}
+	
+	/**
+	 * @param word
+	 * @param mode
+	 * @param order
+	 * @return 图片url列表
+	 */
+	public List<String> searchImages(String word,String mode, String order) {
+		try {
+			word = URLEncoder.encode(word, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		SearchPipeLine pipeLine = new SearchPipeLine();
+		String url ="https://www.pixiv.net/search.php?s_mode=s_tag&word="+word+"&order="+order+"&mode="+mode+"&p=";
+		List<String> list = new ArrayList<>();
+		for (int i = 1; i <= 5; i++) {
+			list.add(url+i);
+		}
+		String[] urls = list.toArray(new String[5]);
+		Spider.create(new Search()).addUrl(urls).addPipeline(pipeLine).thread(3).run();
+		return pipeLine.getImages();
 	}
 }
