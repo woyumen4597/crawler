@@ -1,6 +1,7 @@
 package pipeline;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import us.codecraft.webmagic.ResultItems;
@@ -19,6 +20,7 @@ public class SimplePagePipeLine implements Pipeline {
 	// 下载的目录
 	private String basePath = DEFAULT_DOWNLOAD_PATH; // default
 	private int number = DEFAULT_DOWNLOAD_NUMBER; // default
+	private List<String> urls = new ArrayList<>();
 
 	public String getBasePath() {
 		return basePath;
@@ -56,6 +58,7 @@ public class SimplePagePipeLine implements Pipeline {
 
 	public void process(ResultItems resultItems, Task task) {
 		List<String> list = resultItems.get("urls");
+		setUrls(list);
 		int num = this.number<list.size()?this.number:list.size();
 		int i = 0;
 		while(i<num) {
@@ -70,6 +73,14 @@ public class SimplePagePipeLine implements Pipeline {
 				continue;
 			}
 		}
+	}
+
+	public List<String> getUrls() {
+		return urls;
+	}
+
+	public void setUrls(List<String> urls) {
+		this.urls = urls;
 	}
 
 

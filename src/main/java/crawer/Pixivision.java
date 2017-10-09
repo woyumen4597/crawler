@@ -53,4 +53,14 @@ public class Pixivision implements PageProcessor{
 		String url = "https://www.pixivision.net/zh/a/"+id;
 		Spider.create(new Pixivision()).addUrl(url).addPipeline(new SimplePagePipeLine(basePath,number)).thread(3).run();
 	}
+	
+	public List<String> pixivisionImage(String id) {
+		String url = "https://www.pixivision.net/zh/a/"+id;
+		SimplePagePipeLine pipeLine = new SimplePagePipeLine();
+		Spider.create(new Pixivision()).addUrl(url).addPipeline(pipeLine).thread(3).run();
+		return pipeLine.getUrls();
+	}
+	
+	
+	
 }

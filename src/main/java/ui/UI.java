@@ -3,7 +3,9 @@ package ui;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import auth.Auth;
+import crawer.Pixivision;
 import crawer.Rank;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -18,13 +20,21 @@ import javafx.scene.control.Pagination;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import search.Search;
 import user.User;
@@ -34,8 +44,9 @@ public class UI extends Application {
 	private List<String> urls = new ArrayList<String>();
 	private Pagination pagination;
 	private AnchorPane anchor;
-	private String[] fonts = new String[] {};
-
+	private Image favicon = new Image(getClass().getResourceAsStream("pixiv.jpg"));
+	private BackgroundImage bImage = new BackgroundImage(new Image(getClass().getResourceAsStream("background.jpg")), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT,
+			BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	public int itemsPerpage() {
 		return 4;
 	}
@@ -44,7 +55,6 @@ public class UI extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Pixiv4J");
-		fonts = Font.getFamilies().toArray(fonts);
 		BorderPane pane = new BorderPane();
 		anchor = new AnchorPane();
 		// 左边搜索框
@@ -70,7 +80,9 @@ public class UI extends Application {
 
 		// 左边工具栏
 		VBox vBox = new VBox();
+		vBox.setEffect(new DropShadow());
 		vBox.setSpacing(5);
+		vBox.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE,new CornerRadii(5),new Insets(0))));
 		vBox.setPadding(new Insets(6));
 		TreeItem rankItem = new TreeItem("Rank");
 		rankItem.setExpanded(true);
@@ -90,6 +102,7 @@ public class UI extends Application {
 		TreeView rankTree = new TreeView(rankItem);
 		// User模块
 		TreeItem userItem = new TreeItem("User");
+		userItem.setExpanded(true);
 		HBox box = new HBox();
 		TextField userIdTextField = new TextField();
 		userIdTextField.setMaxWidth(100);
@@ -114,16 +127,41 @@ public class UI extends Application {
 		box.setSpacing(5);
 		box.getChildren().addAll(label, userIdTextField, idButton);
 		TreeItem user_id = new TreeItem(box);
-		userItem.getChildren().add(user_id);
+		HBox pxvbox = new HBox();
+		pxvbox.setSpacing(5);
+		TextField pxvid = new TextField();
+		pxvid.setMaxWidth(100);
+		Label label2 = new Label("PxvId");
+		Button pxvidButton = new Button("Go");
+		pxvidButton.setOnAction((ActionEvent e) -> {
+			Thread thread = new Thread(new Runnable() {
+				public void run() {
+					Platform.runLater(() -> {
+						String id = pxvid.getText();
+						Pixivision pixivision = new Pixivision();
+						urls = pixivision.pixivisionImage(id);
+						urls = DuplicateRemover.removeDuplicate(urls);
+						createPagination();
+					});
+				}
+			});
+			thread.start();
+
+		});
+		pxvbox.getChildren().addAll(label2, pxvid, pxvidButton);
+		TreeItem pixivision = new TreeItem(pxvbox);
+		userItem.getChildren().addAll(user_id, pixivision);
 		TreeView userTree = new TreeView(userItem);
 		vBox.getChildren().addAll(hBox, rankTree, userTree);
-
 		// stage
+		
+		pane.setBackground(new Background(bImage));
 		pane.setLeft(vBox);
 		pane.setCenter(anchor);
 		Scene scene = new Scene(pane);
 		primaryStage.setScene(scene);
-		Image favicon = new Image(getClass().getResourceAsStream("pixiv.jpg"));
+		
+		
 		primaryStage.getIcons().add(favicon);
 		primaryStage.setResizable(true);
 		primaryStage.setMaximized(true);
@@ -184,14 +222,14 @@ public class UI extends Application {
 		int page = pageIndex * itemsPerpage();
 		for (int i = page; i < page + itemsPerpage(); i++) {
 			Image image = new Image(urls.get(i));
-			if(!image.isError()) {
+			if (!image.isError()) {
 				ImageView imageView = new ImageView(image);
 				imageView.setFitHeight(150);
 				imageView.setFitWidth(150);
 				box.getChildren().add(imageView);
 				box.setAlignment(Pos.CENTER);
 			}
-			
+
 		}
 		return box;
 	}
