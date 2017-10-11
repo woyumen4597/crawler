@@ -43,6 +43,9 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import search.Search;
@@ -164,7 +167,10 @@ public class UI extends Application {
 		TreeItem pixivision = new TreeItem(pxvbox);
 		userItem.getChildren().addAll(user_id, pixivision);
 		TreeView userTree = new TreeView(userItem);
-		vBox.getChildren().addAll(hBox, rankTree, userTree);
+		Label footer = new Label("Sh CN Jrc© 2017-");
+		footer.setFont(new Font("verdana", 16));
+		footer.setShape(new Ellipse());
+		vBox.getChildren().addAll(hBox, rankTree, userTree,footer);
 		// stage
 
 		pane.setBackground(new Background(bImage));
