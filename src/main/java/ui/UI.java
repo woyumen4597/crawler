@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import auth.Auth;
 import crawer.Pixivision;
 import crawer.Rank;
+import exception.NotFoundException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -17,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Hyperlink;
@@ -43,9 +45,10 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Arc;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import search.Search;
@@ -60,6 +63,7 @@ public class UI extends Application {
 	private Image favicon = new Image(getClass().getResourceAsStream("pixiv.jpg"));
 	private BackgroundImage bImage = new BackgroundImage(new Image(getClass().getResourceAsStream("background.jpg")),
 			BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	private Alert alert;
 
 	public int itemsPerpage() {
 		return 4;
@@ -80,9 +84,17 @@ public class UI extends Application {
 				public void run() {
 					Platform.runLater(() -> {
 						String keyword = searchTextField.getText();
-						Search search = new Search();
-						urls = search.searchImages(keyword, "safe", "date_d");
-						createPagination();
+						if (keyword.equals("") || keyword == null) {
+							alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle("Error Message");
+							alert.setHeaderText("KEYWORD NULL ERROR");
+							alert.setContentText("Keyword can not be null!!!");
+							alert.showAndWait();
+						} else {
+							Search search = new Search();
+							urls = search.searchImages(keyword, "safe", "date_d");
+							createPagination();
+						}
 					});
 				}
 			});
@@ -122,16 +134,43 @@ public class UI extends Application {
 		TextField userIdTextField = new TextField();
 		userIdTextField.setMaxWidth(100);
 		Label label = new Label("UserId");
+		label.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.ITALIC, 16));
+		label.setTextFill(Color.BLACK);
 		Button idButton = new Button("Go");
 		idButton.setOnAction((ActionEvent e) -> {
 			Thread thread = new Thread(new Runnable() {
 				public void run() {
 					Platform.runLater(() -> {
 						String id = userIdTextField.getText();
-						User user = new User(id);
-						urls = user.illust(5);
-						urls = DuplicateRemover.removeDuplicate(urls);
-						createPagination();
+						if (id.equals("") || id == null) {
+							alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle("Error Message");
+							alert.setHeaderText("USERID NULL ERROR");
+							alert.setContentText("UserId can not be null!!!");
+							alert.showAndWait();
+						} else {
+							try {
+								User user = new User(id);
+								urls = user.illust(5);
+								urls = DuplicateRemover.removeDuplicate(urls);
+								createPagination();
+							} catch (NullPointerException e2) {
+								e2.printStackTrace();
+								alert = new Alert(Alert.AlertType.ERROR);
+								alert.setTitle("Error Message");
+								alert.setHeaderText("USERID INVALID ERROR");
+								alert.setContentText("UserId is invalid!!!");
+								alert.showAndWait();
+							} catch (IndexOutOfBoundsException e3) {
+								e3.printStackTrace();
+								alert = new Alert(Alert.AlertType.ERROR);
+								alert.setTitle("Error Message");
+								alert.setHeaderText("UserIllustEmpty");
+								alert.setContentText("User Has No Illust");
+								alert.showAndWait();
+							}
+
+						}
 					});
 				}
 			});
@@ -139,24 +178,44 @@ public class UI extends Application {
 
 		});
 
-		box.setSpacing(5);
+		box.setSpacing(8);
 		box.getChildren().addAll(label, userIdTextField, idButton);
 		TreeItem user_id = new TreeItem(box);
 		HBox pxvbox = new HBox();
-		pxvbox.setSpacing(5);
+		pxvbox.setSpacing(8);
 		TextField pxvid = new TextField();
 		pxvid.setMaxWidth(100);
 		Label label2 = new Label("PxvId");
+		label2.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 15));
+		label2.setTextFill(Color.BLACK);
 		Button pxvidButton = new Button("Go");
 		pxvidButton.setOnAction((ActionEvent e) -> {
 			Thread thread = new Thread(new Runnable() {
 				public void run() {
 					Platform.runLater(() -> {
 						String id = pxvid.getText();
-						Pixivision pixivision = new Pixivision();
-						urls = pixivision.pixivisionImage(id);
-						urls = DuplicateRemover.removeDuplicate(urls);
-						createPagination();
+						if (id.equals("") || id == null) {
+							alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle("Error Message");
+							alert.setHeaderText("PXVID NULL ERROR");
+							alert.setContentText("PxvId can not be null!!!");
+							alert.showAndWait();
+						} else {
+							Pixivision pixivision = new Pixivision();
+							try {
+								urls = pixivision.pixivisionImage(id);
+								urls = DuplicateRemover.removeDuplicate(urls);
+								createPagination();
+							} catch (NotFoundException e) {
+								e.printStackTrace();
+								alert = new Alert(Alert.AlertType.ERROR);
+								alert.setTitle("Error Message");
+								alert.setHeaderText("PXVID INVALID ERROR");
+								alert.setContentText("PxvId is invalid!");
+								alert.showAndWait();
+							}
+
+						}
 					});
 				}
 			});
@@ -167,10 +226,12 @@ public class UI extends Application {
 		TreeItem pixivision = new TreeItem(pxvbox);
 		userItem.getChildren().addAll(user_id, pixivision);
 		TreeView userTree = new TreeView(userItem);
-		Label footer = new Label("Sh CN Jrc© 2017-");
-		footer.setFont(new Font("verdana", 16));
+		Label footer = new Label("     Sh CN Jrc © 2017 -");
+		footer.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 15));
+		footer.setTextFill(Color.BLUE);
+		footer.setPadding(new Insets(6));
 		footer.setShape(new Ellipse());
-		vBox.getChildren().addAll(hBox, rankTree, userTree,footer);
+		vBox.getChildren().addAll(hBox, rankTree, userTree, footer);
 		// stage
 
 		pane.setBackground(new Background(bImage));
@@ -233,52 +294,63 @@ public class UI extends Application {
 	/**
 	 * @param pageIndex
 	 * @return 创建每一个分页
+	 * @throws NotFoundException
 	 */
 	public VBox createPage(Integer pageIndex) {
 		VBox box = new VBox(5);
 		int page = pageIndex * itemsPerpage();
-		for (int i = page; i < page + itemsPerpage(); i++) {
-			String name = urls.get(i).substring(urls.get(i).lastIndexOf("/")+1);
-			Image image = new Image(urls.get(i));
-			ContextMenu cm = new ContextMenu();
-			if (!image.isError()) {
-				ImageView imageView = new ImageView(image);
-				imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
-					if (e.getButton() == MouseButton.SECONDARY) {
-						cm.show(imageView, e.getScreenX(), e.getScreenY());
-					}
-				});
-				MenuItem cmItem = new MenuItem("Save Image");
-				cm.getItems().add(cmItem);
-				cmItem.setOnAction((ActionEvent e) -> {
-					FileChooser fileChooser1 = new FileChooser();
-					fileChooser1.setTitle("Save Image");
-					FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("JPG FILES","*.jpg");
-					FileChooser.ExtensionFilter filter2 = new FileChooser.ExtensionFilter("PNG FILES","*.png");
-					fileChooser1.getExtensionFilters().addAll(filter,filter2);
-					fileChooser1.setInitialFileName(name);
-					fileChooser1.setInitialDirectory(new File(System.getProperty("user.dir")));
-					File file = fileChooser1.showSaveDialog(primaryStage);
-					if (file != null) {
-						try {
-							ImageIO.write(SwingFXUtils.fromFXImage(image, null), "jpg", file);
-						} catch (IOException ex) {
-							System.out.println(ex.getMessage());
+		if (urls == null || urls.size() == 0) {
+			alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Error Message");
+			alert.setHeaderText("PXVID INVALID ERROR");
+			alert.setContentText("PxvId is invalid!");
+			alert.show();
+		} else {
+			for (int i = page; i < page + itemsPerpage(); i++) {
+				Image image = new Image(urls.get(i));
+				ContextMenu cm = new ContextMenu();
+				if (!image.isError()) {
+					ImageView imageView = new ImageView(image);
+					imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+						if (e.getButton() == MouseButton.SECONDARY) {
+							cm.show(imageView, e.getScreenX(), e.getScreenY());
 						}
-					}
+					});
+					MenuItem cmItem = new MenuItem("Save Image");
+					cm.getItems().add(cmItem);
+					String name;
+					name = urls.get(i).substring(urls.get(i).lastIndexOf("/") + 1);
+					cmItem.setOnAction((ActionEvent e) -> {
+						FileChooser fileChooser1 = new FileChooser();
+						fileChooser1.setTitle("Save Image");
+						FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("JPG FILES", "*.jpg");
+						FileChooser.ExtensionFilter filter2 = new FileChooser.ExtensionFilter("PNG FILES", "*.png");
+						fileChooser1.getExtensionFilters().addAll(filter, filter2);
+						fileChooser1.setInitialFileName(name);
+						fileChooser1.setInitialDirectory(new File(System.getProperty("user.dir")));
+						File file = fileChooser1.showSaveDialog(primaryStage);
+						if (file != null) {
+							try {
+								ImageIO.write(SwingFXUtils.fromFXImage(image, null), "jpg", file);
+							} catch (IOException ex) {
+								System.out.println(ex.getMessage());
+							}
+						}
 
-				});
+					});
 
-				imageView.setFitHeight(150);
-				imageView.setFitWidth(150);
+					imageView.setFitHeight(150);
+					imageView.setFitWidth(150);
 
-				box.getChildren().add(imageView);
-				box.setAlignment(Pos.CENTER);
+					box.getChildren().add(imageView);
+					box.setAlignment(Pos.CENTER);
+
+				}
+
 			}
-
+			return box;
 		}
-
-		return box;
+		return null;
 	}
 
 	/**
@@ -286,7 +358,10 @@ public class UI extends Application {
 	 */
 	public void createPagination() {
 		pagination = new Pagination(urls.size() / itemsPerpage(), 0);
-		pagination.setPageFactory((Integer pageIndex) -> createPage(pageIndex));
+		pagination.setPageFactory((Integer pageIndex) -> {
+			return createPage(pageIndex);
+
+		});
 		AnchorPane.setTopAnchor(pagination, 10.0);
 		AnchorPane.setRightAnchor(pagination, 10.0);
 		AnchorPane.setBottomAnchor(pagination, 10.0);
