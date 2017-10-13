@@ -55,6 +55,11 @@ import search.Search;
 import user.User;
 import utils.DuplicateRemover;
 
+/**
+ * GUI Pixiv4J
+ * @author jrc
+ * 2017年10月13日下午8:15:06
+ */
 public class UI extends Application {
 	private List<String> urls = new ArrayList<String>();
 	private Stage primaryStage;
@@ -65,6 +70,9 @@ public class UI extends Application {
 			BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	private Alert alert;
 
+	/**
+	 * @return 每页的图片数
+	 */
 	public int itemsPerpage() {
 		return 4;
 	}

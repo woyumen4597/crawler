@@ -2,8 +2,12 @@ Crawer [![Build Status](https://travis-ci.org/upbit/pixivpy.svg)](http://www.woy
 ======
 _Pixiv API for Java (without Auth supported)_
 
-
-* [2016/09/19] 增加pixivision特辑搜索 增加App主模块
+* [2017/10/12] 修改细节样式 增加异常处理部分
+* [2017/10/11] 增加图片右键下载功能
+* [2017/10/09] 增加背景图片，增加样式
+* [2017/10/07] 完成GUI搜索部分功能,增加图片去重功能,完成User模块
+* [2017/10/05] 完成GUI界面基本布局,完成rank部分
+* [2017/09/19] 增加pixivision特辑搜索 增加App主模块
 * [2017/09/17] 增加搜索功能(仅查询信息(无法下载(403forbidden-.-)))
 * [2017/09/16] 增加illust查询(通过id查询同画师的作品,并下载指定数量的图片) 合并user detail illust功能
 * [2017/09/14] 增加r18功能(增加Header实现)(Cookie) 添加查询用户信息(通过id)
