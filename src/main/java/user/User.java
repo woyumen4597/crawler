@@ -5,6 +5,7 @@ import java.util.List;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
+import exception.UserIdEmptyException;
 import pipeline.UserPipeLine;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -84,9 +85,9 @@ public class User implements PageProcessor {
 	 * @return 若用户已经设置id,则返回用户信息
 	 * @throws RuntimeException 用户id未设置
 	 */
-	public Detail detail() throws RuntimeException{
+	public Detail detail() throws UserIdEmptyException{
 		if (getId() == null || getId().equals("")) {
-			throw new RuntimeException("Please input user_id");
+			throw new UserIdEmptyException("Please input user_id");
 		}
 		return detail(getId());
 	}

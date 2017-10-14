@@ -43,7 +43,7 @@ public class Pixivision implements PageProcessor {
 	 * @param id
 	 *            pixivsion特辑id
 	 */
-	public void pixivision(String id) {
+	public void pixivision(String id) throws NotFoundException{
 		pixivision(id, SimplePagePipeLine.DEFAULT_DOWNLOAD_PATH, SimplePagePipeLine.DEFAULT_DOWNLOAD_NUMBER);
 	}
 
@@ -55,16 +55,23 @@ public class Pixivision implements PageProcessor {
 	 * @param number
 	 *            图片下载数量
 	 */
-	public void pixivision(String id, String basePath, int number) {
+	public void pixivision(String id, String basePath, int number) throws NotFoundException{
 		String url = "https://www.pixivision.net/zh/a/" + id;
-		Spider.create(new Pixivision()).addUrl(url).addPipeline(new SimplePagePipeLine(basePath, number)).thread(3)
+		SimplePagePipeLine pipeLine = new SimplePagePipeLine(basePath, number);
+		Spider.create(new Pixivision()).addUrl(url).addPipeline(pipeLine).thread(3)
 				.run();
+		if(pipeLine.getUrls().isEmpty()) {
+			throw new NotFoundException("Can't get pixivision!Maybe Id is wrong!");
+		}
 	}
 
 	public List<String> pixivisionImage(String id) throws NotFoundException {
 		String url = "https://www.pixivision.net/zh/a/" + id;
 		SimplePagePipeLine pipeLine = new SimplePagePipeLine();
 		Spider.create(new Pixivision()).addUrl(url).addPipeline(pipeLine).thread(3).run();
+		if(pipeLine.getUrls().isEmpty()) {
+			throw new NotFoundException("Can't get pixivision!Maybe Id is wrong!");
+		}
 		return pipeLine.getUrls();
 	}
 

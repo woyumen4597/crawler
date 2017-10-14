@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import exception.NotFoundException;
 import utils.PicUtils;
 
 public class AuthPixivision{
@@ -13,12 +14,12 @@ public class AuthPixivision{
 	}
 	
 	@Test
-	public void pixivision() {
+	public void pixivision() throws NotFoundException {
 		new Pixivision().pixivision("2810");
 	}
 	
 	@Test
-	public void pixivision2() {
+	public void pixivision2() throws NotFoundException {
 		new Pixivision().pixivision("2840","D:\\webmagic",5);
 	}
 }

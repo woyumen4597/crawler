@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import exception.NotFoundException;
 import search.Search;
 import user.Detail;
 
@@ -43,7 +44,7 @@ public class AppTest {
 	}
 
 	@Test
-	public void test6() {
+	public void test6() throws NotFoundException {
 		App app = new App();
 		app.pixivision().pixivision("2810");
 	}

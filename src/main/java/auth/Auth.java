@@ -7,6 +7,7 @@ import java.util.List;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
+import exception.NotFoundException;
 import pipeline.RankUrlPipeLine;
 import pipeline.SimplePagePipeLine;
 import us.codecraft.webmagic.Page;
@@ -44,17 +45,17 @@ public class Auth implements PageProcessor{
 	/**
 	 * @param mode {daily,weekly,male,female} 模式选择
 	 * @param number 下载数量
-	 * @throws Exception
+	 * @throws NotFoundException
 	 */
-	public void r18_rank(String mode,int number) throws Exception{
+	public void r18_rank(String mode,int number) throws NotFoundException{
 		r18_rank(number, mode, SimplePagePipeLine.DEFAULT_DOWNLOAD_PATH);
 	}
 
 	/**
 	 * @param mode  {daily,weekly,male,female} 模式选择
-	 * @throws Exception
+	 * @throws NotFoundException
 	 */
-	public void r18_rank(String mode) throws Exception{
+	public void r18_rank(String mode) throws NotFoundException{
 		r18_rank(SimplePagePipeLine.DEFAULT_DOWNLOAD_NUMBER, mode, SimplePagePipeLine.DEFAULT_DOWNLOAD_PATH);
 	}
 
@@ -62,24 +63,31 @@ public class Auth implements PageProcessor{
 	 * @param number 下载数量
 	 * @param mode {daily,weekly,male,female} 模式选择
 	 * @param basePath 下载目录
-	 * @throws Exception
+	 * @throws NotFoundException
 	 */
-	public void r18_rank(int number,String mode,String basePath) throws Exception{
+	public void r18_rank(int number,String mode,String basePath) throws NotFoundException{
 		String url = "https://www.pixiv.net/ranking.php?mode="+mode+"_r18&format=json";
-		Spider.create(new Auth()).addUrl(url).thread(3).addPipeline(new SimplePagePipeLine(basePath, number)).run();
+		SimplePagePipeLine pipeLine = new SimplePagePipeLine(basePath, number);
+		Spider.create(new Auth()).addUrl(url).thread(3).addPipeline(pipeLine).run();
+		if(pipeLine.getUrls().isEmpty()) {
+			throw new NotFoundException("Can't get r18 rank result!Maybe cookies is expired!");
+		}
 	}
 
 	/**
 	 * 
 	 * @param mode
 	 * @return 图片url列表 
-	 * @throws Exception
+	 * @throws NotFoundException
 	 */
-	public List<String> r18_rank_result(String mode) throws Exception{
+	public List<String> r18_rank_result(String mode) throws NotFoundException{
 		String url = "https://www.pixiv.net/ranking.php?mode="+mode+"_r18&format=json";
 		List<String> urls = new ArrayList<>();
 		RankUrlPipeLine pipeLine = new RankUrlPipeLine(urls);
 		Spider.create(new Auth()).addUrl(url).thread(3).addPipeline(pipeLine).run();
+		if(pipeLine.getUrls().isEmpty()) {
+			throw new NotFoundException("Can't get r18 rank result!Maybe cookies is expired!");
+		}
 		return pipeLine.getUrls();
 	}
 

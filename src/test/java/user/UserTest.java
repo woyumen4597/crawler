@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import exception.UserIdEmptyException;
+
 public class UserTest {
 	@Test
 	public void user_detail() {
@@ -11,12 +13,12 @@ public class UserTest {
 	}
 
 	@Test
-	public void user_detail2() throws RuntimeException {
+	public void user_detail2() throws UserIdEmptyException {
 		new User("27517").detail();
 	}
 
 	@Test
-	public void user_exception() throws RuntimeException {
+	public void user_exception() throws UserIdEmptyException  {
 		new User().detail();
 	}
 

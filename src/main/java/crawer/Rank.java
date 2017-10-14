@@ -6,6 +6,7 @@ import java.util.List;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
+import exception.NotFoundException;
 import pipeline.RankUrlPipeLine;
 import pipeline.SimplePagePipeLine;
 import us.codecraft.webmagic.Page;
@@ -82,15 +83,15 @@ public class Rank implements PageProcessor {
 		return site;
 	}
 
-	public void rank(String mode) throws Exception {
+	public void rank(String mode) throws NotFoundException {
 		rank(mode, SimplePagePipeLine.DEFAULT_DOWNLOAD_PATH, SimplePagePipeLine.DEFAULT_DOWNLOAD_NUMBER);
 	}
 
-	public void rank(String mode, String basePath, int number) throws Exception {
+	public void rank(String mode, String basePath, int number) throws NotFoundException {
 		rank(mode, basePath, number, "illust");;
 	}
 
-	public void rank(String mode, String content) throws Exception {
+	public void rank(String mode, String content) throws NotFoundException {
 		rank(mode, SimplePagePipeLine.DEFAULT_DOWNLOAD_PATH, SimplePagePipeLine.DEFAULT_DOWNLOAD_NUMBER, content);
 	}
 
@@ -109,23 +110,30 @@ public class Rank implements PageProcessor {
 	 *            下载的图片数量
 	 * @param content
 	 *            内容类型
-	 * @throws Exception
+	 * @throws NotFoundException
 	 */
-	public void rank(String mode, String basePath, int number, String content) throws Exception {
+	public void rank(String mode, String basePath, int number, String content) throws NotFoundException {
 		String originUrl = "https://www.pixiv.net/ranking.php?mode=" + mode + "&content=" + content + "&format=json";
-		Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(new SimplePagePipeLine(basePath, number)).run();
+		SimplePagePipeLine pipeLine = new SimplePagePipeLine(basePath, number);
+		Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(pipeLine).run();
+		if(pipeLine.getUrls().isEmpty()) {
+			throw new NotFoundException("Can't get rank result!");
+		}
 	}
 	
 	/**
 	 * @param mode
 	 * @return 获得url的列表
-	 * @throws Exception
+	 * @throws NotFoundException
 	 */
-	public List<String> rankResult(String mode) throws Exception{
+	public List<String> rankResult(String mode) throws NotFoundException{
 		String originUrl = "https://www.pixiv.net/ranking.php?mode=" + mode + "&format=json";
 		List<String> urls = new ArrayList<String>();
 		RankUrlPipeLine pipeLine = new RankUrlPipeLine(urls);
 		Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(pipeLine).run();
+		if(pipeLine.getUrls()==null||pipeLine.getUrls().isEmpty()) {
+			throw new NotFoundException("Can't find rank result!");
+		}
 		return pipeLine.getUrls();
 	}
 

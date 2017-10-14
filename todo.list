@@ -39,3 +39,6 @@ def illust_detail(self, illust_id):
 # sort: [date_desc, date_asc]
 # duration: [within_last_day, within_last_week, within_last_month]
 def search_illust(self, word, search_target='partial_match_for_tags', sort='date_desc', duration=None):
+
+
+# 图片点击放大

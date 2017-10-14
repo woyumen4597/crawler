@@ -3,6 +3,7 @@ package crawer;
 
 import org.junit.Test;
 
+import exception.NotFoundException;
 import utils.PicUtils;
 
 public class TestPixiv {
@@ -26,4 +27,11 @@ public class TestPixiv {
 		small = small.replaceAll("_master\\d+", "");
 		System.out.println(small);
 	}
+	
+	@Test
+	public void testException() throws NotFoundException {
+		new Pixivision().pixivisionImage("ss");
+	}
+	
+	
 }
