@@ -1,4 +1,4 @@
-Crawer [![Build Status](https://travis-ci.org/upbit/pixivpy.svg)](http://www.woyumen4597.me)
+crawler [![Build Status](https://travis-ci.org/upbit/pixivpy.svg)](http://www.woyumen4597.me)
 ======
 _Pixiv API for Java (without Auth supported)_
 
@@ -66,7 +66,7 @@ To See [doc](/doc)
 
 ### Examples:
  
-在[test](https://github.com/woyumen4597/crawer/tree/master/src/test/java/)包里
+在[test](https://github.com/woyumen4597/crawler/tree/master/src/test/java/)包里
 
 ## License
 
