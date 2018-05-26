@@ -2,6 +2,7 @@ crawler [![Build Status](https://travis-ci.org/upbit/pixivpy.svg)](http://www.wo
 ======
 _Pixiv API for Java (without Auth supported)_
 
+* [2017/10/14] 发布[Realease1.0版本](https://github.com/woyumen4597/crawler/releases) 
 * [2017/10/12] 修改细节样式 增加异常处理部分
 * [2017/10/11] 增加图片右键下载功能
 * [2017/10/09] 增加背景图片，增加样式
