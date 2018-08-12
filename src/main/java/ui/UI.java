@@ -66,8 +66,8 @@ public class UI extends Application {
     private Stage primaryStage;
     private Pagination pagination;
     private AnchorPane anchor;
-    private Image favicon = new Image(getClass().getResourceAsStream("pixiv.jpg"));
-    private BackgroundImage bImage = new BackgroundImage(new Image(getClass().getResourceAsStream("background.jpg")),
+    private Image favicon = new Image("pixiv.jpg");
+    private BackgroundImage bImage = new BackgroundImage(new Image("background.jpg"),
             BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
     private Alert alert;
 
