@@ -20,10 +20,12 @@ import us.codecraft.webmagic.selector.Html;
  * @author jrc
  */
 public class Search implements PageProcessor {
-    private String cookie = "p_ab_id=9; login_ever=yes; ki_t=1482039280489%3B1485442943702%3B1485442943702%3B3%3B9; ki_r=; p_ab_id_2=5; closed_discovery_bubble=1; a_type=0; _ga=GA1.2.226561830.1479867556; device_token=b0d7d37ca3a7daecc2d3d1aa756dcdd3; is_sensei_service_user=1; module_orders_mypage=%5B%7B%22name%22%3A%22recommended_illusts%22%2C%22visible%22%3Atrue%7D%2C%7B%22name%22%3A%22everyone_new_illusts%22%2C%22visible%22%3Atrue%7D%2C%7B%22name%22%3A%22following_new_illusts%22%2C%22visible%22%3Atrue%7D%2C%7B%22name%22%3A%22mypixiv_new_illusts%22%2C%22visible%22%3Atrue%7D%2C%7B%22name%22%3A%22fanbox%22%2C%22visible%22%3Atrue%7D%2C%7B%22name%22%3A%22featured_tags%22%2C%22visible%22%3Atrue%7D%2C%7B%22name%22%3A%22contests%22%2C%22visible%22%3Atrue%7D%2C%7B%22name%22%3A%22sensei_courses%22%2C%22visible%22%3Atrue%7D%2C%7B%22name%22%3A%22spotlight%22%2C%22visible%22%3Atrue%7D%2C%7B%22name%22%3A%22booth_follow_items%22%2C%22visible%22%3Atrue%7D%5D; PHPSESSID=20921007_21996a28dc2813e666a4b56f6e176685; __utma=235335808.226561830.1479867556.1505627398.1505631651.59; __utmb=235335808.8.10.1505631651; __utmc=235335808; __utmz=235335808.1504341764.33.10.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); __utmv=235335808.|2=login%20ever=yes=1^3=plan=normal=1^4=p_ab_id_2=5=1^5=gender=male=1^6=user_id=20921007=1^9=p_ab_id=9=1^10=p_ab_id_2=5=1^11=lang=zh=1^13=fanbox_fixed_otodoke_naiyou=no=1^14=hide_upload_form=yes=1^15=machine_translate_test=no=1";
     private Site site = Site.me().setRetryTimes(3).setTimeOut(10000).setCharset("UTF-8")
-            .addHeader("Host", "www.pixiv.net").addHeader("Cookie", cookie).addHeader("User-Agent",
-                    "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36");
+            .addHeader("Host", "www.pixiv.net")
+            .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36")
+            .addHeader("Authorization", "Bearer 8mMXXWT9iuwdJvsVIvQsFYDwuZpRCM")
+            .addHeader("Content-Type", "application/x-www-form-urlencoded")
+            .addHeader("Referer", "https://www.pixiv.net/search.php");
     private String image;
     private String type;
     private String tags;
@@ -69,7 +71,7 @@ public class Search implements PageProcessor {
 
     public void process(Page page) {
         Html html = page.getHtml();
-        List<String> list = html.css("div._layout-thumbnail").all();
+        List<String> list = html.css("div.lazyloaded").all();
         for (String string : list) {
             if (string.contains("illust")) {
                 Search search = new Search();

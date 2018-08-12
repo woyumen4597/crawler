@@ -2,6 +2,7 @@ crawler [![Build Status](https://travis-ci.org/upbit/pixivpy.svg)](http://www.wo
 ======
 _Pixiv API for Java (without Auth supported)_
 
+* [2018/08/12] 修复无法访问的情况，废除search和user的API.由于GUI的图片已经403foridden了。故GUI界面也将废弃.
 * [2017/10/14] 发布[Realease1.0版本](https://github.com/woyumen4597/crawler/releases) 
 * [2017/10/12] 修改细节样式 增加异常处理部分
 * [2017/10/11] 增加图片右键下载功能

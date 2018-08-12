@@ -23,7 +23,11 @@ public class Illust implements PageProcessor {
     private Site site = Site.me().addHeader("Host", "www.pixiv.net")
             .addHeader("User-Agent",
                     "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36")
-            .addHeader("Upgrade-Insecure-Requests", "1").setTimeOut(10000).setSleepTime(3000).setRetryTimes(3);
+            .addHeader("Upgrade-Insecure-Requests", "1").setTimeOut(10000).setSleepTime(3000).setRetryTimes(3)
+            .setUserAgent("Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11")
+            .addHeader("Authorization","Bearer 8mMXXWT9iuwdJvsVIvQsFYDwuZpRCM")
+            .addHeader("Content-Type","application/x-www-form-urlencoded")
+            .addHeader("Referer","https://www.pixiv.net/member_illust.php");
 
     public void process(Page page) {
         Html html = page.getHtml();

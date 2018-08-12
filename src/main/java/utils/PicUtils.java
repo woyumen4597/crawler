@@ -5,10 +5,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,16 +20,21 @@ import org.slf4j.LoggerFactory;
  * @author jrc
  */
 public class PicUtils {
+    private static CloseableHttpClient client;
+    private static Logger logger = LoggerFactory.getLogger(PicUtils.class);
+
+    static {
+        client = HttpClients.createDefault();
+    }
 
 
     public static boolean download(String basePath, String filename, String url) throws IOException {
-        Logger logger = LoggerFactory.getLogger(PicUtils.class);
-        CloseableHttpClient client = HttpClients.createDefault();
         HttpGet get = new HttpGet(url);
+        enrichRequest(get);
         CloseableHttpResponse response = client.execute(get);
         int code = response.getStatusLine().getStatusCode();
         if (code == 200) {
-            String path = basePath + "/" + filename;
+            String path = basePath + File.separator + filename;
             File file = new File(path);
             FileOutputStream outputStream = new FileOutputStream(file);
             byte[] buffer = new byte[1024];
@@ -44,5 +51,11 @@ public class PicUtils {
             logger.error(url + " download failed,error code: " + code);
             return false;
         }
+    }
+
+    private static void enrichRequest(HttpGet get) {
+        get.addHeader("Authorization", "Bearer 8mMXXWT9iuwdJvsVIvQsFYDwuZpRCM");
+        get.addHeader("Content-Type", "application/x-www-form-urlencoded");
+        get.addHeader("Referer", "https://www.pixiv.net/ranking.php");
     }
 }

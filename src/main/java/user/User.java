@@ -2,6 +2,7 @@ package user;
 
 import java.util.List;
 
+import auth.Auth;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
@@ -60,7 +61,10 @@ public class User implements PageProcessor {
     }
 
     private Site site = Site.me().setRetryTimes(3).setTimeOut(10000)
-            .setUserAgent("Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11");
+            .setUserAgent("Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11")
+            .addHeader("Cookie", Auth.cookie)
+            .addHeader("Authorization", "Bearer 74210090d0dd8bed2b649e99dbbde8e9")
+            .addHeader("Authority","app-api.pixiv.net");
 
     public Site getSite() {
         return site;
