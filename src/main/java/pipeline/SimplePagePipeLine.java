@@ -7,6 +7,7 @@ import java.util.List;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
+import utils.FileUtils;
 import utils.PicUtils;
 
 /**
@@ -15,9 +16,9 @@ import utils.PicUtils;
  * @author jrc
  */
 public class SimplePagePipeLine implements Pipeline {
-    public static String DEFAULT_DOWNLOAD_PATH = "D:\\webmagic";
+    public static String DEFAULT_DOWNLOAD_PATH = FileUtils.getDefaultDownloadPath();
     public static int DEFAULT_DOWNLOAD_NUMBER = 5;
-    // 下载的目录
+
     private String basePath = DEFAULT_DOWNLOAD_PATH; // default
     private int number = DEFAULT_DOWNLOAD_NUMBER; // default
     private List<String> urls = new ArrayList<>();

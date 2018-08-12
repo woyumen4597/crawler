@@ -24,7 +24,11 @@ public class Detail implements PageProcessor {
     private String gender;
     private String twitter;
     private List<String> illust_ids;
-    private Site site = Site.me().setRetryTimes(3).setTimeOut(10000);
+    private Site site = Site.me().setRetryTimes(3).setTimeOut(10000)
+            .setUserAgent("Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11")
+            .addHeader("Authorization","Bearer 8mMXXWT9iuwdJvsVIvQsFYDwuZpRCM")
+            .addHeader("Content-Type","application/x-www-form-urlencoded")
+            .addHeader("Referer","https://www.pixiv.net/member.php");
 
     public Detail() {
     }

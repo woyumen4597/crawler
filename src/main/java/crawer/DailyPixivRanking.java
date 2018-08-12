@@ -22,7 +22,10 @@ import us.codecraft.webmagic.selector.Json;
 public class DailyPixivRanking implements PageProcessor {
     private static int NUMBER = 5;
     private Site site = Site.me().setRetryTimes(3).setTimeOut(10000)
-            .setUserAgent("Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11");
+            .setUserAgent("Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11")
+            .addHeader("Authorization","Bearer 8mMXXWT9iuwdJvsVIvQsFYDwuZpRCM")
+            .addHeader("Content-Type","application/x-www-form-urlencoded")
+            .addHeader("Referer","https://www.pixiv.net/ranking.php");
 
     public void process(Page page) {
         Json json = page.getJson();

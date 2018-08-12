@@ -3,6 +3,7 @@ package crawer;
 import java.util.ArrayList;
 import java.util.List;
 
+import auth.Auth;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
@@ -37,7 +38,11 @@ public class Rank implements PageProcessor {
     private String mode;
     private String content;
     private Site site = Site.me().setRetryTimes(3).setTimeOut(10000)
-            .setUserAgent("Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11");
+            .setUserAgent("Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11")
+            .addHeader("Authorization", "Bearer 8mMXXWT9iuwdJvsVIvQsFYDwuZpRCM")
+            .addHeader("Content-Type", "application/x-www-form-urlencoded")
+            .addHeader("Referer", "https://www.pixiv.net/ranking.php")
+            .addHeader("Cookie", Auth.cookie);
 
     public Rank() {
     }
@@ -87,8 +92,11 @@ public class Rank implements PageProcessor {
     }
 
     public void rank(String mode, String basePath, int number) throws NotFoundException {
-        rank(mode, basePath, number, "illust");
-        ;
+        if (mode.equals("male") || mode.equals("female") || mode.equals("original")) {
+            rank(mode, basePath, number,"");
+        }else {
+            rank(mode, basePath, number, "illust");
+        }
     }
 
     public void rank(String mode, String content) throws NotFoundException {
@@ -109,7 +117,12 @@ public class Rank implements PageProcessor {
      * @throws NotFoundException
      */
     public void rank(String mode, String basePath, int number, String content) throws NotFoundException {
-        String originUrl = "https://www.pixiv.net/ranking.php?mode=" + mode + "&content=" + content + "&format=json";
+        String originUrl;
+        if (content.equals("")) {
+            originUrl = "https://www.pixiv.net/ranking.php?mode=" + mode + "&format=json";
+        } else {
+            originUrl = "https://www.pixiv.net/ranking.php?mode=" + mode + "&content=" + content + "&format=json";
+        }
         SimplePagePipeLine pipeLine = new SimplePagePipeLine(basePath, number);
         Spider.create(new Rank()).addUrl(originUrl).thread(3).addPipeline(pipeLine).run();
         if (pipeLine.getUrls().isEmpty()) {

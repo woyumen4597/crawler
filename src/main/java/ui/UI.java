@@ -51,9 +51,12 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import search.Search;
 import user.User;
 import utils.DuplicateRemover;
+import utils.FileUtils;
 
 /**
  * GUI Pixiv4J
@@ -62,12 +65,14 @@ import utils.DuplicateRemover;
  * 2017年10月13日下午8:15:06
  */
 public class UI extends Application {
+    private static Logger logger = LoggerFactory.getLogger(UI.class);
+
     private List<String> urls = new ArrayList<String>();
     private Stage primaryStage;
     private Pagination pagination;
     private AnchorPane anchor;
-    private Image favicon = new Image(getClass().getResourceAsStream("pixiv.jpg"));
-    private BackgroundImage bImage = new BackgroundImage(new Image(getClass().getResourceAsStream("background.jpg")),
+    private Image favicon = new Image("pixiv.jpg");
+    private BackgroundImage bImage = new BackgroundImage(new Image("background.jpg"),
             BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
     private Alert alert;
 
@@ -316,7 +321,9 @@ public class UI extends Application {
             alert.show();
         } else {
             for (int i = page; i < page + itemsPerpage(); i++) {
+                logger.info("Get Image Url : " + urls.get(i));
                 Image image = new Image(urls.get(i));
+                logger.info("Image Error?" + image.isError());
                 ContextMenu cm = new ContextMenu();
                 if (!image.isError()) {
                     ImageView imageView = new ImageView(image);

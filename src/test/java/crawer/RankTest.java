@@ -1,13 +1,13 @@
 package crawer;
 
-import java.util.List;
 
+import base.BaseTestCase;
 import org.junit.Test;
 
-public class RankTest {
+public class RankTest extends BaseTestCase {
     @Test
     public void rank_week() throws Exception {
-        new Rank().rank("weekly", "/Users/rongchuan.jin/webmagic", 5);
+        new Rank().rank("weekly", DIRNAME, 5);
     }
 
     @Test
@@ -59,13 +59,4 @@ public class RankTest {
     public void rank_r18() throws Exception {
         new Rank().rank("daily_r18");
     }
-
-    @Test
-    public void rank_urls() throws Exception {
-        List<String> list = new Rank().rankResult("daily");
-        for (String string : list) {
-            System.out.println(string);
-        }
-    }
-
 }
