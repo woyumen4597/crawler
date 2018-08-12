@@ -13,40 +13,40 @@ import utils.DuplicateRemover;
 
 /**
  * 处理搜索结果的PipeLine
- * @author jrc
  *
+ * @author jrc
  */
-public class SearchPipeLine implements Pipeline{
-	protected Logger logger = LoggerFactory.getLogger(getClass());
-	private List<Search> searchs;
-	private List<String> images;
+public class SearchPipeLine implements Pipeline {
+    protected Logger logger = LoggerFactory.getLogger(getClass());
+    private List<Search> searchs;
+    private List<String> images;
 
-	@SuppressWarnings("unchecked")
-	public void process(ResultItems resultItems, Task task) {
-		List<Search> results = resultItems.get("results");
-		if(results!=null){
-			logger.info("Search Succeed!Saved into List<Search>!");
-		}
-		setSearchs(results);
-		images = resultItems.get("images");
-		images = DuplicateRemover.removeDuplicate(images);
-		setImages(images);
-	}
+    @SuppressWarnings("unchecked")
+    public void process(ResultItems resultItems, Task task) {
+        List<Search> results = resultItems.get("results");
+        if (results != null) {
+            logger.info("Search Succeed!Saved into List<Search>!");
+        }
+        setSearchs(results);
+        images = resultItems.get("images");
+        images = DuplicateRemover.removeDuplicate(images);
+        setImages(images);
+    }
 
-	public List<Search> getSearchs() {
-		return searchs;
-	}
+    public List<Search> getSearchs() {
+        return searchs;
+    }
 
-	public void setSearchs(List<Search> searchs) {
-		this.searchs = searchs;
-	}
+    public void setSearchs(List<Search> searchs) {
+        this.searchs = searchs;
+    }
 
-	public List<String> getImages() {
-		return images;
-	}
+    public List<String> getImages() {
+        return images;
+    }
 
-	public void setImages(List<String> images) {
-		this.images = images;
-	}
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
 
 }

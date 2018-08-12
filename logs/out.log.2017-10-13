@@ -1,6 +1,0 @@
- INFO [JavaFX Application Thread] - Spider www.pixiv.net started!
- INFO [pool-2-thread-1] - downloading page success https://www.pixiv.net/ranking.php?mode=daily&format=json
- INFO [JavaFX Application Thread] - Spider www.pixiv.net closed! 1 pages downloaded.
-2017-10-13 21:46:41 [JavaFX Application Thread:0] - [INFO] [Spider:306] [run] Spider www.pixiv.net started!
-2017-10-13 21:46:42 [pool-2-thread-1:1420] - [INFO] [HttpClientDownloader:88] [download] downloading page success https://www.pixiv.net/ranking.php?mode=daily&format=json
-2017-10-13 21:46:48 [JavaFX Application Thread:6562] - [INFO] [Spider:338] [run] Spider www.pixiv.net closed! 1 pages downloaded.

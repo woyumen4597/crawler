@@ -14,35 +14,35 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 下载工具类
- * @author jrc
  *
+ * @author jrc
  */
 public class PicUtils {
 
 
-	public static boolean download(String basePath, String filename, String url) throws IOException {
-		Logger logger = LoggerFactory.getLogger(PicUtils.class);
-		CloseableHttpClient client = HttpClients.createDefault();
-		HttpGet get = new HttpGet(url);
-		CloseableHttpResponse response = client.execute(get);
-		int code = response.getStatusLine().getStatusCode();
-		if (code == 200) {
-			String path = basePath + "/" + filename;
-			File file = new File(path);
-			FileOutputStream outputStream = new FileOutputStream(file);
-			byte[] buffer = new byte[1024];
-			int len;
-			InputStream inputStream = response.getEntity().getContent();
-			while ((len = inputStream.read(buffer)) != -1) {
-				outputStream.write(buffer, 0, len);
-			}
-			outputStream.flush();
-			outputStream.close();
-			inputStream.close();
-			return true;
-		}else{
-			logger.error(url+" download failed,error code: "+code);
-			return false;
-		}
-	}
+    public static boolean download(String basePath, String filename, String url) throws IOException {
+        Logger logger = LoggerFactory.getLogger(PicUtils.class);
+        CloseableHttpClient client = HttpClients.createDefault();
+        HttpGet get = new HttpGet(url);
+        CloseableHttpResponse response = client.execute(get);
+        int code = response.getStatusLine().getStatusCode();
+        if (code == 200) {
+            String path = basePath + "/" + filename;
+            File file = new File(path);
+            FileOutputStream outputStream = new FileOutputStream(file);
+            byte[] buffer = new byte[1024];
+            int len;
+            InputStream inputStream = response.getEntity().getContent();
+            while ((len = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, len);
+            }
+            outputStream.flush();
+            outputStream.close();
+            inputStream.close();
+            return true;
+        } else {
+            logger.error(url + " download failed,error code: " + code);
+            return false;
+        }
+    }
 }
